@@ -1,57 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Schema for Hotels.xml -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-
-  <!-- basic types -->
-  <xs:simpleType name="StateCode">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="[A-Z]{2}"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="ZipCode">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="\d{5}"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="PhoneType">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="\d{3}-\d{3}-\d{4}"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- Address -->
-  <xs:complexType name="AddressType">
-    <xs:sequence>
-      <xs:element name="Number" type="xs:string"/>
-      <xs:element name="Street" type="xs:string"/>
-      <xs:element name="City" type="xs:string"/>
-      <xs:element name="State" type="StateCode"/>
-      <xs:element name="Zip" type="ZipCode"/>
-      <xs:element name="NearestAirport" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!-- Hotel -->
-  <xs:complexType name="HotelType">
-    <xs:sequence>
-      <xs:element name="Name" type="xs:string"/>
-      <xs:element name="Phone" type="PhoneType" minOccurs="1" maxOccurs="unbounded"/>
-      <xs:element name="Address" type="AddressType"/>
-    </xs:sequence>
-    <!-- id required; Rating optional (decimal). Rating aligns with _Rating in the JSON hint -->
-    <xs:attribute name="id" type="xs:ID" use="required"/>
-    <xs:attribute name="Rating" type="xs:decimal" use="optional"/>
-  </xs:complexType>
-
-  <!-- Root -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="Hotels">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="Hotel" type="HotelType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="Hotel" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" type="xs:string"/>
+              <xs:element name="Phone" type="xs:string" maxOccurs="unbounded"/>
+              <xs:element name="Address">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Number" type="xs:string"/>
+                    <xs:element name="Street" type="xs:string"/>
+                    <xs:element name="City" type="xs:string"/>
+                    <xs:element name="State" type="xs:string"/>
+                    <xs:element name="Zip" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="NearestAirport" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Rating" type="xs:decimal" use="optional"/>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-
 </xs:schema>
