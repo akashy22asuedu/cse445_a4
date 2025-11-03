@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Root element -->
   <xs:element name="Hotels">
     <xs:complexType>
       <xs:sequence>
+        <!-- Hotel can appear multiple times -->
         <xs:element name="Hotel" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
+              <!-- Name -->
               <xs:element name="Name" type="xs:string"/>
+              
+              <!-- One or more Phone entries -->
               <xs:element name="Phone" type="xs:string" maxOccurs="unbounded"/>
+              
+              <!-- Address with required NearestAirport attribute -->
               <xs:element name="Address">
                 <xs:complexType>
                   <xs:sequence>
@@ -21,10 +29,12 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
+            <!-- Optional Rating attribute on Hotel -->
             <xs:attribute name="Rating" type="xs:decimal" use="optional"/>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+
 </xs:schema>
